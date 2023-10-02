@@ -1,0 +1,30 @@
+body{
+    padding-top: 1.5%;
+    font-family: 'Roboto', sans-serif;
+    background-color: rgb(34,39,46);
+    color: rgb(173,174,179);
+}
+a{
+    color: rgb(231,70,70);
+}
+.header{
+    text-align: center;
+}
+.headingStart{
+    color: rgb(231,70,70);
+    display: inline;
+}
+.categories{
+    margin-top: 5%;
+    padding-left: 15%;
+}
+.category{
+    color: rgb(231,70,70);
+}
+.article{
+    white-space: pre-line;
+    text-align: center;
+    padding-left: 5%;
+    padding-right: 5%;
+
+}
