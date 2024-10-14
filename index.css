@@ -24,6 +24,9 @@ body{
 a{
     color: rgb(231,70,70);
 }
+sup{
+    font-size: small;
+}
 .fillImg{
     display: block;
     width: 100%;
