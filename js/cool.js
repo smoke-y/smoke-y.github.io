@@ -11,7 +11,7 @@ window.onload = function(){
         const postDiv = document.createElement("li");
 
         postDiv.innerHTML = `
-            <h2 class="headingStart"><a href="${post[0]}" rel="noopener noreferrer">${post[1]}</a></h2>
+            <h2 class="headingStart"><a href="${post[0]}">${post[1]}</a></h2>
             <h3 style="display: inline">${post[2]}</h3>
         `;
         container.appendChild(postDiv);
