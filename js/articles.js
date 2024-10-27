@@ -16,7 +16,7 @@ function genPosts(id, postsMeta){
         const postDiv = document.createElement("li");
 
         postDiv.innerHTML = `
-            <h2 class="red"><a href="../articles/${post[0]}.html" style="color: rgb(173,174,179);">${post[0]}.html</a><sup>${post[1]}</sup></h2>
+            <h3 class="red"><a href="../articles/${post[0]}.html" style="color: rgb(173,174,179);">${post[0]}.html</a><sup>${post[1]}</sup></h3>
         `;
         container.appendChild(postDiv);
     });
