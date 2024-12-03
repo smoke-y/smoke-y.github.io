@@ -27,6 +27,10 @@ a{
 sup{
     font-size: small;
 }
+code{
+    font-size: large;
+    white-space: pre;
+}
 .fillImg{
     display: block;
     width: 100%;
