@@ -7,8 +7,9 @@ const progPosts = [
     ["xorwtf", "01/11/2024"]
 ]
 
-const designPosts = [
+const miscPosts = [
     ["architecture", "08/08/2024"],
+    ["the_eras_tour", "20/12/2024"],
 ]
 
 function genPosts(id, postsMeta){
@@ -25,5 +26,5 @@ function genPosts(id, postsMeta){
 
 window.onload = function(){
     genPosts("progPosts", progPosts);
-    genPosts("designPosts", designPosts);
+    genPosts("miscPosts", miscPosts);
 };
