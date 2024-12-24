@@ -4,7 +4,8 @@ const progPosts = [
     ["spirit_of_engineering", "08/08/2024"],
     ["interpretamming", "24/09/2024"],
     ["evolution", "14/10/2024"],
-    ["xorwtf", "01/11/2024"]
+    ["xorwtf", "01/11/2024"],
+    ["tamil_gpt", "24/12/2024"]
 ]
 
 const miscPosts = [

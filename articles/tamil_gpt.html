@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    <!-- custom css -->
+    <link rel="stylesheet" href="..//index.css"/>
+    <title>That's Dope</title>
+    <body>
+        <div class="header">
+            <br>
+            <h1 style="display: inline">[</h1>
+            <h1 class="headingStart">That's </h1>
+            <h1 style="display: inline"> Dope]</h1>
+            <h3>
+                <a href="../index.html">home</a>
+                |
+                <a href="../html/articles.html">articles</a>
+                |
+                <a href="../html/opus.html">opus</a>
+                |
+                <a href="../html/art.html">art</a>
+            </h3>
+        </div>
+        <div class="tittle"><h2 class="headingStart">TAMIL_GPT.HTML</h2></div>
+        <h3 class="article">
+            Pre-training GPT-2 to output <a href="https://en.wikipedia.org/wiki/Tamil_language">Tamil</a> tokens. We use <a href="https://arxiv.org/abs/2106.09685">LoRa</a> so that we can retain knowledge from the previous training and reduce the number of parameters to train. The <a href="https://huggingface.co/datasets/0VISH0/TamilText">dataset</a> used is a cleaned version of the <a href="https://huggingface.co/datasets/uonlp/CulturaX">CulturaX</a> dataset.
+
+            The bottleneck while training the model happened to be memory. Here is how I reduced the memory footprint.
+            1) <a href="https://pytorch.org/tutorials/intermediate/optimizer_step_in_backward_tutorial.html">Fusing optimization and backpropagation</a>
+            On profiling, I noticed these spikes: <img src="../images/unfused.png">
+            These spikes are due to the allocation while backpropagation. We can remove them if we don't save the gradients. Instead, we use them to correct the weights as soon as we compute them. This results in the following: <img src="../images/fused.png">
+            2) <a href="https://pytorch.org/blog/what-every-user-should-know-about-mixed-precision-training-in-pytorch/">Mixed precision</a>
+            This is a way to use float16 in a few operations and float32 in the rest. This results in trading off precision for performance.
+            3) Compiling
+            After compiling the model to <a href="https://openai.com/index/triton/">triton</a>, we know what's going to happen, and when. This reduces memory footprint during training and inference.
+        </h3>
+    </body>
+</html>
