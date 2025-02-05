@@ -5,12 +5,14 @@ const progPosts = [
     ["interpretamming", "24/09/2024"],
     ["evolution", "14/10/2024"],
     ["xorwtf", "01/11/2024"],
-    ["tamil_gpt", "24/12/2024"]
+    ["tamil_gpt", "24/12/2024"],
+    ["dl_is_different", "05/02/2025"]
 ]
 
 const miscPosts = [
     ["architecture", "08/08/2024"],
     ["the_eras_tour", "20/12/2024"],
+    ["the_witness", "05/02/2025"]
 ]
 
 function genPosts(id, postsMeta){
