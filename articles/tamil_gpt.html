@@ -26,16 +26,33 @@
         </div>
         <div class="tittle"><h2 class="headingStart">TAMIL_GPT.HTML</h2></div>
         <h3 class="article">
-            Pre-training GPT-2 to output <a href="https://en.wikipedia.org/wiki/Tamil_language">Tamil</a> tokens. We use <a href="https://arxiv.org/abs/2106.09685">LoRa</a> so that we can retain knowledge from the previous training and reduce the number of parameters to train. The <a href="https://huggingface.co/datasets/0VISH0/TamilText">dataset</a> used is a cleaned version of the <a href="https://huggingface.co/datasets/uonlp/CulturaX">CulturaX</a> dataset.
+            Here's how I trained a GPT in 4 hours on a single <a href="https://youtu.be/MShbP3OpASA?si=our-8VdMI8f-7SKz&t=2997">NVIDIA</a> RTX a4000(16GB).
 
-            The bottleneck while training the model happened to be memory. Here is how I reduced the memory footprint.
-            1) <a href="https://pytorch.org/tutorials/intermediate/optimizer_step_in_backward_tutorial.html">Fusing optimization and backpropagation</a>
-            On profiling, I noticed these spikes: <img src="../images/unfused.png">
-            These spikes are due to the allocation while backpropagation. We can remove them if we don't save the gradients. Instead, we use them to correct the weights as soon as we compute them. This results in the following: <img src="../images/fused.png">
-            2) <a href="https://pytorch.org/blog/what-every-user-should-know-about-mixed-precision-training-in-pytorch/">Mixed precision</a>
-            This is a way to use float16 in a few operations and float32 in the rest. This results in trading off precision for performance.
-            3) Compiling
-            After compiling the model to <a href="https://openai.com/index/triton/">triton</a>, we know what's going to happen, and when. This reduces memory footprint during training and inference.
+I started by implementing <a href="https://github.com/karpathy/build-nanogpt">nanoGPT</a> by Karpathy Sensei. nanoGPT is a 12-layer GPT2 which was trained on 8 <a href="https://youtu.be/MShbP3OpASA?si=our-8VdMI8f-7SKz&t=2997">NVIDIA</a> a100(80GB). All I had was a single <a href="https://youtu.be/MShbP3OpASA?si=our-8VdMI8f-7SKz&t=2997">NVIDIA</a> a4000 which my uni was ready to lend me for a day :(
+
+I stumbled across <a href="https://github.com/KellerJordan/modded-nanogpt">modded-nanoGPT</a>: A repo trying to speedrun the training of nanoGPT. They "modded" nanoGPT with QK-normalization, rotary embeddings, skip connections, etc...
+
+I applied these changes to my GPT hoping it would reduce my training time:
+
+1) <a href="https://arxiv.org/abs/2010.04245">QK-normalization</a>: If the QK matrix is not normalized, we can encounter an explosion on a certain dimension(s) in the logits. This might silence other signals, making it harder to learn.
+
+2) Skip connections: The first block is connected to the last block, the second block is connected to the second last, and so on.
+
+3) <a href="https://arxiv.org/abs/2104.09864">Rotary embeddings</a>: Usually, positional embeddings are added before QK matrix projection. Rotary embedding adds positional information after QK matrix projection using a rotation matrix, which results in a more uniform/predictable encoding of positional information.
+
+4) Weight initialization: Reduces the chance of exploding or vanishing gradients.
+
+5) <a href="https://arxiv.org/abs/2109.08668v2">ReLu^2</a> and multiples of 2: ReLu^2 performs slightly better than GELU and keeping the size of the embedding layer in multiples of 2 increases performance.
+
+I started training at 12:00 PM and the GPT crunched around 580 million tokens(<a href="https://github.com/AI4Bharat/indicnlp_corpus?tab=readme-ov-file#text-corpora">dataset</a>) in 4 hours.
+
+<img src="../images/tloss.png">
+
+We can do better!
+1) <a href="https://kellerjordan.github.io/posts/muon/">Muon</a> optimizer: This optimizer has been used in modded-nanoGPT for optimizing hidden matrices. I didn't have enough time to play around to find ideal hyperparameters so I used my good old friend Adam.
+2) <a href="https://arxiv.org/abs/2412.19437v1">Multi-head latent attention</a>: Used in Deepseek v3, reduces memory overhead while giving good performance.
+
+You can find the code <a href="https://github.com/smoke-y/tamilGPT">here</a> and the weights <a href="https://huggingface.co/smoke-y/tamilGPT">here</a>.
         </h3>
     </body>
 </html>
