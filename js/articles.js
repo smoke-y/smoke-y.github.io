@@ -12,7 +12,8 @@ const progPosts = [
 const miscPosts = [
     ["architecture", "08/08/2024"],
     ["the_eras_tour", "20/12/2024"],
-    ["the_witness", "05/02/2025"]
+    ["the_witness", "05/02/2025"],
+    ["post_capitalism", "10/03/2025"]
 ]
 
 function genPosts(id, postsMeta){
