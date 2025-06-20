@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html>
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    <!-- custom css -->
+    <link rel="stylesheet" href="..//index.css"/>
+    <title>That's Dope</title>
+    <body>
+        <div class="header">
+            <br>
+            <h1 style="display: inline">[</h1>
+            <h1 class="headingStart">That's </h1>
+            <h1 style="display: inline"> Dope]</h1>
+            <h3>
+                <a href="../index.html">home</a>
+                |
+                <a href="../html/articles.html">articles</a>
+                |
+                <a href="../html/opus.html">opus</a>
+                |
+                <a href="../html/art.html">art</a>
+            </h3>
+        </div>
+        <div class="tittle"><h2 class="headingStart">ZEUS.HTML</h2></div>
+        <h3 class="article">
+            When I found out that Jonathan Blow was creating a game using a game engine he wrote, in a programming language he developed, I thought, "Hey, I could probably do that." 
+
+            "Imitation is not just the sincerest form of flattery-it's the sincerest form of learning." -George Bernard Shaw.
+
+            I had written a game engine from scratch, a game/prototype from scratch, but never a compiler. After writing a few interpreters, and reading books such as "Writing an Interpreter in go", "Crafting Interpreters", etc... I went on to design a language after noticing a few issues with c/c++ while making my game engine.
+
+            GOAL: remove all objectively bad features about C while adding as little 0 cost abstractions/syntax sugars as possible.
+
+            Objectively bad features of C:
+            1) Header files
+            2) Syntax: function pointers, adding a struct before declaring a variable, etc...
+            3) No joy of programming: passing a pointer to a function to mimic multiple returns, adding a break after every switch case statement, switch case body scope, etc...
+            4) goto: other than breaking/continuing nested loops, goto has very little use in C.
+            5) Macro system at lexer level.
+
+            Introducing Zeus, yet another C alternative. Zeus solves all the above issues and you can take a look at the examples <a href="https://github.com/smoke-y/Zeus/tree/main/examples">here</a>. I want to spend the rest of the essay on a few interesting choices I took while designing and implementing Zeus.
+
+            1) Keep the kernel as small as possible, and try to implement features in user space.
+
+            I haven't mentioned null-terminated strings as an objectively bad feature in C, because it is not. If your program doesn't do a lot of string processing, using null-terminated strings takes less memory and is faster as you don't have to pass the length to functions as an argument(Assuming your function doesn't do any string processing that requires it to know the length of the string). Talking to C libraries becomes a pain if your language only supports length-based strings. Ideally, we would like to support both, but having both at kernel level is bloat. Zeus solves it with a simple pound word: #fill.
+
+            <code>
+                #import "lib/str.zs"
+                stringVariable :String = #fill "Hello, World"
+            </code>
+
+            File lib/str.zs implements the struct String, and #fill fills its members(stringVariable.mem points to an address in the data segment and stringVariable.len holds the length of the string which is computed at compile time).
+
+            Holding and printing a backtrace can also be implemented in user space. We just need the compiler to insert certain functions at the start and end of functions. This is a feature yet to be implemented.
+
+            2) Pointer casting without friction
+
+            In C we have void* which tells the compiler that the type of memory is not known and casting from void* to any other pointer requires explicit casting. Why?
+
+            My compiler(written in cpp) is littered with casts such as:
+
+            <code>
+                Foo *foo = (Foo*)malloc(sizeof(Foo));
+                //or
+                if(root->type == ASTType::PROC_CALL){
+                    ASTProcCall *proc = (ASTProcCall*)root;
+                    ....
+                };
+            </code>
+
+            Zeus makes such pointer casting easy by introducing the type 'ptr'. Any pointer of any type can cast to ptr and ptr can cast to any type of pointer without explicit casting. Hence, no explicit casting is required when calling malloc as malloc is declared in Zeus as:
+
+            <code>
+                malloc  :: proc_decl(u64) -> ptr
+            </code>
+
+            3) Let the compiler do the work
+
+            *) Just mention the entry file which contains the main function. The compiler should be able to find all the files that the main file depends on.
+
+            *) Auto-cast should be painless. You don't have to mention the cast on LHS and RHS. For example:
+
+            <code>
+                long long x = (long long) y; //why?
+            </code>
+
+            Instead in Zeus adding '$' tells the compiler that you would like to cast the expression into the required type.
+
+            <code>
+                s64 x = $ y
+            </code>
+
+            *) The compiler should be able to figure out the type of the variable when the type of the expression can be found.
+
+            In cpp, you would do
+
+            <code>
+                auto x = 4;
+            </code>
+
+            But in Zeus:
+
+            <code>
+                x := 4
+            </code>
+
+            I wanted the number of keywords to be as less as possible. They should only be different when they do different things such as switch and if. 'switch' generates a jump table, but 'if' is a cmp instruction. They should not be unified under the same keyword. But for and while can be unified under the same keyword as they do the same thing in the same manner. In Zeus, we have only 1 keyword for loop, which is 'for'.
+
+            <code>
+                //C-style for loop
+                for "outer-loop" g:=0...3{
+                    x = 0
+                //C-style while loop
+                    for x != 4{
+                        if x == 3{
+                            continue "outer-loop"
+                        }
+                        x = x + 1
+                    }
+                }
+            </code>
+
+            4) 0 cost abstractions
+
+            Multiple returns and defer statements are my favorite.
+
+            <code>
+                swap :: proc(x,y :u32) -> (u32, u32){
+                //swapping without 3rd variable
+                    return y, x
+                }
+                bar :: proc(){
+                    defer printf("Bye, World\n")
+                    defer {
+                        printf("Another defer statement")
+                    }
+                }
+            </code>
+        </h3>
+    </body>
+</html>
