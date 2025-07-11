@@ -138,6 +138,22 @@
                         printf("Another defer statement")
                     }
                 }
+
+            [UPDATE: 11/07/25]
+            5) Compile time execution
+
+            Mark a procedure with #comptime and that procedure will be executed during compiletime.
+            All the statements in the procedure will be lowered to bytecodes and executed on a VM.
+            FUN FACT: The VM is bootstrapped and written in Zeus!
+
+            <code>
+                compTimeProc :: proc #comptime (){
+                //This will print the license while compiling
+                    license("LICENSE.txt")
+
+                    log("This is being printed from a procedure being executed at compile time")
+                    log("The VM executing the bytecodes is bootstrapped and written in Zeus!")
+                }
             </code>
         </h3>
     </body>
