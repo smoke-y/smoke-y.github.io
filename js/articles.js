@@ -11,6 +11,7 @@ const progPosts = [
 ]
 
 const miscPosts = [
+    ["ibs", "13/07/2025"],
     ["post_capitalism", "10/03/2025"],
     ["the_witness", "05/02/2025"],
     ["the_eras_tour", "20/12/2024"],
