@@ -4,7 +4,6 @@ const progPosts = [
     ["dl_is_different", "05/02/2025"],
     ["xorwtf", "01/11/2024"],
     ["evolution", "14/10/2024"],
-    ["interpretamming", "24/09/2024"],
     ["spirit_of_engineering", "08/08/2024"],
     ["uni_first_year", "30/07/2024"],
     ["non_linearity", "20/01/2024"],
@@ -12,10 +11,6 @@ const progPosts = [
 
 const miscPosts = [
     ["ibs", "13/07/2025"],
-    ["post_capitalism", "10/03/2025"],
-    ["the_witness", "05/02/2025"],
-    ["the_eras_tour", "20/12/2024"],
-    ["architecture", "08/08/2024"],
 ]
 
 function genPosts(id, postsMeta){
