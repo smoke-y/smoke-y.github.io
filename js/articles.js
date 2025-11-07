@@ -10,6 +10,7 @@ const progPosts = [
 ]
 
 const miscPosts = [
+    ["motif", "07/11/2025"],
     ["ibs", "13/07/2025"],
 ]
 
