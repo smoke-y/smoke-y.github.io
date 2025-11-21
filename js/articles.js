@@ -1,4 +1,4 @@
-const progPosts = [
+const engPosts = [
     ["zeus", "10/06/2025"],
     ["tamil_gpt", "19/02/2025"],
     ["dl_is_different", "05/02/2025"],
@@ -10,6 +10,7 @@ const progPosts = [
 ]
 
 const miscPosts = [
+    ["block", "21/11/2025"],
     ["use_it", "12/11/2025"],
     ["motif", "07/11/2025"],
     ["ibs", "13/07/2025"],
@@ -28,6 +29,6 @@ function genPosts(id, postsMeta){
 }
 
 window.onload = function(){
-    genPosts("progPosts", progPosts);
+    genPosts("engPosts", engPosts);
     genPosts("miscPosts", miscPosts);
 };
