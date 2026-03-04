@@ -1,0 +1,6 @@
+:root[data-theme="vscode"] {
+  --background-color:     #1e1e1e;
+  --background-color-alt: #252526;
+  --text-color:           #d4d4d4;
+  --text-color-alt:       #858585;
+}
