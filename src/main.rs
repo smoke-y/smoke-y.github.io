@@ -39,7 +39,7 @@ fn main() -> Result<(), Box<dyn Error>>{
     let name = add_header_footer(&args[1])?;
 
     let mut article_src = fs::read_to_string("crab/articles").expect("Did not find crab/articles");
-    if article_src.contains(&name) == false && name != "articles"{
+    if article_src.contains(&name) == false && ["articles", "art", "bookmarks"].contains(&name.as_str()) == false{
         let offset = article_src.find("<ul>\n").expect("Expected unordered list tag");
         article_src.insert_str(offset + 5, &format!("<li><a href=\"/article/{}.html\">{}</a></li>\n", name, name));
         fs::write("crab/articles", article_src)?;
