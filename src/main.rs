@@ -24,7 +24,7 @@ fn add_header_footer(file_name: &str) -> Result<String, Box<dyn Error>>{
     header.push_str(&footer);
 
 
-    let mut file = File::create(format!("article/{}.html", name))?;
+    let mut file = File::create(format!("articles/{}.html", name))?;
     let _ = file.write_all(header.as_bytes());
 
     Ok(name.to_string())
@@ -41,7 +41,7 @@ fn main() -> Result<(), Box<dyn Error>>{
     let mut article_src = fs::read_to_string("crab/articles").expect("Did not find crab/articles");
     if article_src.contains(&name) == false && ["articles", "art", "bookmarks"].contains(&name.as_str()) == false{
         let offset = article_src.find("<ul>\n").expect("Expected unordered list tag");
-        article_src.insert_str(offset + 5, &format!("<li><a href=\"/article/{}.html\">{}</a></li>\n", name, name));
+        article_src.insert_str(offset + 5, &format!("<li><a href=\"/articles/{}.html\">{}</a></li>\n", name, name));
         fs::write("crab/articles", article_src)?;
         println!("Updating crab/article");
         let _ = add_header_footer("crab/articles");
