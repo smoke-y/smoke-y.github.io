@@ -1,1 +1,27 @@
-todo
+<h2>Misc</h2>
+<ul>
+<li><a href="https://geohot.github.io/blog/jekyll/update/2025/09/13/get-out-of-technology.html">Get out of tech</a></li>
+<li><a href="https://geohot.github.io//blog/jekyll/update/2026/01/17/three-minutes.html">Have you considered not participating? </a></li>
+</ul>
+
+<h2>Hardware</h2>
+<ul>
+  <li><a href="https://jaycarlson.net/embedded-linux/">Building linux SoC chips</a></li>
+</ul>
+
+<h2>Programming</h2>
+<ul>
+  <li><a href="https://caseymuratori.com/blog_0015">How to write good programs</a></li>
+  <li><a href="http://number-none.com/blow/blog/programming/2014/09/26/carmack-on-inlined-code.html">How to write good programs: pt2</a></li>
+  <li><a href="https://faultlore.com/blah/oops-that-was-important/">Code optimization is an art</a></li>
+  <li><a href="http://www.catb.org/~esr/faqs/hacker-howto.html#believe1">How to become a hacker</a></li>
+</ul>
+
+<h2>Video</h2>
+<ul>
+  <li><a href="https://youtu.be/I845O57ZSy4?si=EOnYtDaZbzn7fRPs">Interview: John Carmack</a></li>
+  <li><a href="https://youtu.be/iwcYp-XT7UI?si=1k-OvgVD4TTMlV4J">Interview: George Hotz</a></li>
+  <li><a href="https://youtu.be/dSCBCk4xVa0?si=pKvvd9QPMwjtzN_b">Deep thoughts on engineering</a></li>
+</ul>
+<br>
+Check out <a href="https://ludwigabap.com/">ludwig</a>'s site. He has a lot of material.
