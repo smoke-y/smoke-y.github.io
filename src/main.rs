@@ -82,7 +82,8 @@ fn main() -> Result<(), Box<dyn Error>>{
     let ci = "crab/img";
 
     let article_src = fs::read_to_string(c).expect("Did not find {c}");
-    if article_src.contains(&name) == false && ["articles", "art", "bookmarks", "img"].contains(&name.as_str()) == false && is_img == false{
+    let reserved = ["articles", "art", "bookmarks", "img", "papers"];
+    if article_src.contains(&name) == false && reserved.contains(&name.as_str()) == false && is_img == false{
         let _ = update_root(&name, c, article_src);
     }else if is_img {
         let img_src = fs::read_to_string(ci).expect("Did not find {ci}");
